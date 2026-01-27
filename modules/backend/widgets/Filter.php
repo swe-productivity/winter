@@ -128,7 +128,7 @@ class Filter extends WidgetBase
                         $params['after']    = null;
                     }
 
-                    if (strcasecmp($before, '2999-12-31 23:59:59') < 0) {
+                    if (strcasecmp($before, '2037-12-31 23:59:59') < 0) {
                         $params['beforeStr'] = Backend::dateTime($scope->value[1], ['formatAlias' => 'dateMin']);
                         $params['before']    = $before;
                     }
@@ -1072,7 +1072,7 @@ class Filter extends WidgetBase
                         if ($i == 0) {
                             $dates[] = Carbon::createFromFormat('Y-m-d H:i:s', '0000-01-01 00:00:00');
                         } else {
-                            $dates[] = Carbon::createFromFormat('Y-m-d H:i:s', '2999-12-31 23:59:59');
+                            $dates[] = Carbon::createFromFormat('Y-m-d H:i:s', '2037-12-31 23:59:59');
                         }
                     } else {
                         $dates = [];
