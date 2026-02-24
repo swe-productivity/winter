@@ -42,9 +42,6 @@ class NestedForm extends FormWidgetBase
             'usePanelStyles',
         ]);
 
-        if ($this->formField->disabled) {
-            $this->previewMode = true;
-        }
 
         $config = $this->makeConfig($this->form);
         $config->model = $this->model;
@@ -52,6 +49,12 @@ class NestedForm extends FormWidgetBase
         $config->alias = $this->alias . $this->defaultAlias;
         $config->arrayName = $this->getFieldName();
         $config->isNested = true;
+
+        if ($this->formField->disabled) {
+            foreach ($config->fields as &$field) {
+                $field["disabled"] = true;
+            };
+        }
 
         if (object_get($this->getParentForm()->config, 'enableDefaults') === true) {
             $config->enableDefaults = true;
