@@ -2,6 +2,7 @@
 
 use Backend\Classes\FormWidgetBase;
 use Backend\Widgets\Form;
+use Winter\Storm\Database\Model;
 
 /**
  * Nested Form
@@ -46,9 +47,23 @@ class NestedForm extends FormWidgetBase
             $this->previewMode = true;
         }
 
+        $nestedData = $this->getLoadValue();
+        
+        $dummyModel = new class extends Model {
+            public function __get($key) {
+                return null;
+            }
+            public function __isset($key) {
+                return false;
+            }
+            public function exists() {
+                return false;
+            }
+        };
+        
         $config = $this->makeConfig($this->form);
-        $config->model = $this->model;
-        $config->data = $this->getLoadValue();
+        $config->model = $dummyModel;
+        $config->data = $nestedData ?: [];
         $config->alias = $this->alias . $this->defaultAlias;
         $config->arrayName = $this->getFieldName();
         $config->isNested = true;
